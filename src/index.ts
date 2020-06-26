@@ -1,24 +1,28 @@
-console.log('Try npm run check/fix!');
+import RingCentral from 'ringcentral-extensible';
 
-const longString =
-  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ut aliquet diam.';
+const rc1 = new RingCentral({
+  clientId: process.env.RINGCENTRAL_CLIENT_ID!,
+  clientSecret: process.env.RINGCENTRAL_CLIENT_SECRET!,
+  server: process.env.RINGCENTRAL_SERVER_URL!,
+});
+const rc2 = new RingCentral({
+  clientId: process.env.RINGCENTRAL_CLIENT_ID!,
+  clientSecret: process.env.RINGCENTRAL_CLIENT_SECRET!,
+  server: process.env.RINGCENTRAL_SERVER_URL!,
+});
 
-const trailing = 'Semicolon';
+(async () => {
+  await rc1.authorize({
+    username: process.env.RINGCENTRAL_USERNAME!,
+    extension: process.env.RINGCENTRAL_EXTENSION_1!,
+    password: process.env.RINGCENTRAL_PASSWORD_1!,
+  });
+  await rc2.authorize({
+    username: process.env.RINGCENTRAL_USERNAME!,
+    extension: process.env.RINGCENTRAL_EXTENSION_2!,
+    password: process.env.RINGCENTRAL_PASSWORD_2!,
+  });
 
-const why = 'am I tabbed?';
-
-export function doSomeStuff(
-  withThis: string,
-  andThat: string,
-  andThose: string[]
-) {
-  //function on one line
-  if (!andThose.length) {
-    return false;
-  }
-  console.log(withThis);
-  console.log(andThat);
-  console.dir(andThose);
-  return;
-}
-// TODO: more examples
+  await rc1.revoke();
+  await rc2.revoke();
+})();
