@@ -6,7 +6,7 @@ import waitFor from 'wait-for-async';
 
 jest.setTimeout(128000);
 
-describe('monitor incoming SMS', () => {
+describe('monitor message store', () => {
   test('as super admin', async () => {
     // super admin
     const rc1 = new RingCentral({
@@ -45,8 +45,8 @@ describe('monitor incoming SMS', () => {
     let count = 0;
     pubNubExtension1.subscribe(
       [
-        `/restapi/v1.0/account/~/extension/${ext1.id}/message-store/instant?type=SMS`,
-        `/restapi/v1.0/account/~/extension/${ext2.id}/message-store/instant?type=SMS`,
+        `/restapi/v1.0/account/~/extension/${ext1.id}/message-store`,
+        `/restapi/v1.0/account/~/extension/${ext2.id}/message-store`,
       ],
       () => {
         count += 1;
@@ -126,8 +126,8 @@ describe('monitor incoming SMS', () => {
     let count = 0;
     pubNubExtension2.subscribe(
       [
-        `/restapi/v1.0/account/~/extension/${ext1.id}/message-store/instant?type=SMS`,
-        `/restapi/v1.0/account/~/extension/${ext2.id}/message-store/instant?type=SMS`,
+        `/restapi/v1.0/account/~/extension/${ext1.id}/message-store`,
+        `/restapi/v1.0/account/~/extension/${ext2.id}/message-store`,
       ],
       () => {
         count += 1;
