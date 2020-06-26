@@ -1,4 +1,4 @@
-# Monitor all incoming SMS
+# Monitor incoming SMS
 
 ## As super admin
 

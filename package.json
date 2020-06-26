@@ -1,15 +1,21 @@
 {
   "license": "MIT",
   "scripts": {
-    "test": "ts-node -r dotenv-override-true/config src/index.ts"
+    "test": "jest -w 1 --detectOpenHandles"
   },
   "dependencies": {
-    "ringcentral-extensible": "^0.8.3"
+    "@types/pubnub": "^4.27.4",
+    "pubnub": "^4.28.1",
+    "ringcentral-extensible": "^0.8.3",
+    "wait-for-async": "^0.5.0"
   },
   "devDependencies": {
+    "@types/jest": "^26.0.3",
     "@types/node": "^14.0.14",
     "dotenv-override-true": "^6.2.0",
     "gts": "^2.0.2",
+    "jest": "^26.1.0",
+    "ts-jest": "^26.1.1",
     "ts-node": "^8.10.2",
     "typescript": "^3.9.5",
     "yarn-upgrade-all": "^0.5.2"
