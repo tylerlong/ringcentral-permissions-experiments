@@ -1,5 +1,3 @@
-/* eslint-disable node/no-unpublished-import */
-/* eslint-env jest */
 import RingCentral from '@rc-ex/core';
 import RestException from '@rc-ex/core/RestException';
 
