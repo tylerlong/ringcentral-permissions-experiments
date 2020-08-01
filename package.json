@@ -4,20 +4,19 @@
     "test": "jest -w 1 --detectOpenHandles"
   },
   "dependencies": {
-    "@types/pubnub": "^4.27.4",
-    "pubnub": "^4.28.1",
-    "ringcentral-extensible": "^0.8.3",
+    "@rc-ex/core": "^0.4.2",
+    "@rc-ex/pubnub": "^0.4.5",
     "wait-for-async": "^0.5.0"
   },
   "devDependencies": {
-    "@types/jest": "^26.0.3",
-    "@types/node": "^14.0.14",
-    "dotenv-override-true": "^6.2.0",
+    "@types/jest": "^26.0.8",
+    "@types/node": "^14.0.27",
+    "dotenv-override-true": "^6.2.1",
     "gts": "^2.0.2",
-    "jest": "^26.1.0",
-    "ts-jest": "^26.1.1",
+    "jest": "^26.2.2",
+    "ts-jest": "^26.1.4",
     "ts-node": "^8.10.2",
-    "typescript": "^3.9.5",
-    "yarn-upgrade-all": "^0.5.2"
+    "typescript": "^3.9.7",
+    "yarn-upgrade-all": "^0.5.4"
   }
 }
