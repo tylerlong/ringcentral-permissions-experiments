@@ -9,3 +9,4 @@ It helps you to answer the following questions:
 3. [Can I read other's message store?](./test/read-message-store)
 4. [Can I send sms using other's number?](./test/send-message-on-behalf-of-another)
 5. [Can I monitor other's presence?](./test/monitor-presence)
+6. [Can I call control other's call sessions?](./call-control)
