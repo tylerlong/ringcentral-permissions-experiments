@@ -1,4 +1,5 @@
 import RingCentral from '@rc-ex/core';
+import RestException from '@rc-ex/core/RestException';
 
 jest.setTimeout(128000);
 
@@ -30,10 +31,11 @@ describe('create contact', () => {
     });
     const ext2 = await rc2.restapi().account().extension().get();
 
+    // admin create contact for standard user
     const contact = await rc1
       .restapi()
       .account()
-      .extension()
+      .extension(ext2.id?.toString())
       .addressBook()
       .contact()
       .post({
@@ -41,15 +43,39 @@ describe('create contact', () => {
         lastName: 'lastName',
         email: 'email@sample.com',
       });
-
     // delete it after testing
     await rc1
       .restapi()
       .account()
-      .extension()
+      .extension(ext2.id?.toString())
       .addressBook()
       .contact(contact.id?.toString())
       .delete();
+
+    // standard user create contact for another user
+    let exception: RestException | undefined = undefined;
+    try {
+      await rc2
+        .restapi()
+        .account()
+        .extension(ext1.id?.toString())
+        .addressBook()
+        .contact()
+        .post({
+          firstName: 'firstName',
+          lastName: 'lastName',
+          email: 'email@sample.com',
+        });
+    } catch (e) {
+      exception = e;
+    }
+    expect(exception).toBeDefined();
+    expect(exception!.message.includes('CMN-419'));
+    expect(
+      exception!.message.includes(
+        'user needs to have [EditPersonalContacts] permission granted with extended scope'
+      )
+    );
 
     await rc1.revoke();
     await rc2.revoke();
