@@ -7,3 +7,10 @@ Ref: https://medium.com/ringcentral-developers/ringcentral-telephony-session-eve
 > Also, you will not be allowed to use the call information to control active calls of other extensions even if you are an admin user.
 
 > In order to forward an incoming call to another destination, your app must be authenticated (logged in) by the same extension which supposes to receive the call. For example, if you receive notification of an incoming call to the extension 105 and you want to forward the call to extension 110 or to a PSTN number, you have to login the app with the extension 105 login credentials.
+
+
+## extension number identical to account number
+
+It is said that if extension number is identical to account number, that extension is able to control others calls.
+
+But this feature is undocumented and may change in the future. Do not use it production!
