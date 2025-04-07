@@ -34,6 +34,7 @@ describe("read message store", () => {
       .messageStore()
       .list({ dateFrom: "2016-03-10T18:07:52.534Z" });
     expect(r.records?.length).toBeGreaterThan(0);
+    let ext1MessageId = r.records![0].id!.toString();
     r = await rc2
       .restapi()
       .account()
@@ -57,7 +58,7 @@ describe("read message store", () => {
       .messageStore(r.records![0].id!.toString())
       .get();
 
-    // standard user read other's message store
+    // standard user list other's message store
     let exception: RestException | undefined = undefined;
     try {
       r = await rc2
@@ -67,6 +68,26 @@ describe("read message store", () => {
         .messageStore()
         .list({ dateFrom: "2016-03-10T18:07:52.534Z" });
       expect(r.records?.length).toBeGreaterThan(0);
+    } catch (e) {
+      exception = e as RestException;
+    }
+    expect(exception).toBeDefined();
+    expect(exception!.message.includes("CMN-419"));
+    expect(
+      exception!.message.includes(
+        "user needs to have [ReadMessages] permission granted with extended scope",
+      ),
+    );
+
+    // standard user read other's message store by id
+    try {
+      const r2 = await rc2
+        .restapi()
+        .account()
+        .extension(ext1.id!.toString())
+        .messageStore(ext1MessageId)
+        .get();
+      expect(r2.id).toEqual(ext1MessageId);
     } catch (e) {
       exception = e as RestException;
     }

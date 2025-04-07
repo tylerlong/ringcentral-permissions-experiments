@@ -14,7 +14,6 @@ r = await rc1
 expect(r.records?.length).toBeGreaterThan(0);
 ```
 
-
 ## As standard user
 
 You are not allowed to read other's message store:
@@ -35,3 +34,17 @@ You are not allowed to read other's message store:
 "status": 403,
 "statusText": "Forbidden",
 ```
+
+## Read a specify message by id
+
+```ts
+r = await rc1
+  .restapi()
+  .account()
+  .extension(ext2.id!.toString())
+  .messageStore(messsage.id)
+  .get();
+expect(r.records?.length).toBeGreaterThan(0);
+```
+
+Same result as above.
