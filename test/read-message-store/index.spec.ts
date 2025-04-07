@@ -1,10 +1,10 @@
-import RingCentral from '@rc-ex/core';
-import RestException from '@rc-ex/core/RestException';
+import RingCentral from "@rc-ex/core";
+import RestException from "@rc-ex/core/dist/esm/RestException";
 
 jest.setTimeout(128000);
 
-describe('read message store', () => {
-  test('default', async () => {
+describe("read message store", () => {
+  test("default", async () => {
     // super admin
     const rc1 = new RingCentral({
       clientId: process.env.RINGCENTRAL_CLIENT_ID!,
@@ -12,9 +12,7 @@ describe('read message store', () => {
       server: process.env.RINGCENTRAL_SERVER_URL!,
     });
     await rc1.authorize({
-      username: process.env.RINGCENTRAL_USERNAME!,
-      extension: process.env.RINGCENTRAL_EXTENSION_1!,
-      password: process.env.RINGCENTRAL_PASSWORD_1!,
+      jwt: process.env.TOKEN_1!,
     });
     const ext1 = await rc1.restapi().account().extension().get();
 
@@ -25,9 +23,7 @@ describe('read message store', () => {
       server: process.env.RINGCENTRAL_SERVER_URL!,
     });
     await rc2.authorize({
-      username: process.env.RINGCENTRAL_USERNAME!,
-      extension: process.env.RINGCENTRAL_EXTENSION_2!,
-      password: process.env.RINGCENTRAL_PASSWORD_2!,
+      jwt: process.env.TOKEN_2!,
     });
     const ext2 = await rc2.restapi().account().extension().get();
 
@@ -36,14 +32,14 @@ describe('read message store', () => {
       .account()
       .extension(ext1.id!.toString())
       .messageStore()
-      .list();
+      .list({ dateFrom: "2016-03-10T18:07:52.534Z" });
     expect(r.records?.length).toBeGreaterThan(0);
     r = await rc2
       .restapi()
       .account()
       .extension(ext2.id!.toString())
       .messageStore()
-      .list();
+      .list({ dateFrom: "2016-03-10T18:07:52.534Z" });
     expect(r.records?.length).toBeGreaterThan(0);
 
     // admin read other's message store
@@ -52,7 +48,7 @@ describe('read message store', () => {
       .account()
       .extension(ext2.id!.toString())
       .messageStore()
-      .list();
+      .list({ dateFrom: "2016-03-10T18:07:52.534Z" });
     expect(r.records?.length).toBeGreaterThan(0);
     r = await rc1
       .restapi()
@@ -61,6 +57,7 @@ describe('read message store', () => {
       .messageStore(r.records![0].id!.toString())
       .get();
 
+    // standard user read other's message store
     let exception: RestException | undefined = undefined;
     try {
       r = await rc2
@@ -68,17 +65,17 @@ describe('read message store', () => {
         .account()
         .extension(ext1.id!.toString())
         .messageStore()
-        .list();
+        .list({ dateFrom: "2016-03-10T18:07:52.534Z" });
       expect(r.records?.length).toBeGreaterThan(0);
     } catch (e) {
-      exception = e;
+      exception = e as RestException;
     }
     expect(exception).toBeDefined();
-    expect(exception!.message.includes('CMN-419'));
+    expect(exception!.message.includes("CMN-419"));
     expect(
       exception!.message.includes(
-        'user needs to have [ReadMessages] permission granted with extended scope'
-      )
+        "user needs to have [ReadMessages] permission granted with extended scope",
+      ),
     );
 
     await rc1.revoke();
