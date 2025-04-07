@@ -4,19 +4,19 @@
     "test": "jest -w 1 --detectOpenHandles"
   },
   "dependencies": {
-    "@rc-ex/core": "^0.5.5",
-    "@rc-ex/pubnub": "^0.5.5",
-    "wait-for-async": "^0.5.0"
+    "@rc-ex/core": "^1.6.17",
+    "@rc-ex/pubnub": "^1.1.15",
+    "wait-for-async": "^0.7.13"
   },
   "devDependencies": {
-    "@types/jest": "^26.0.13",
-    "@types/node": "^14.10.1",
+    "@types/jest": "^29.5.14",
+    "@types/node": "^22.14.0",
     "dotenv-override-true": "^6.2.2",
-    "gts": "^2.0.2",
-    "jest": "^26.4.2",
-    "ts-jest": "^26.3.0",
-    "ts-node": "^9.0.0",
-    "typescript": "^4.0.2",
-    "yarn-upgrade-all": "^0.5.4"
+    "gts": "^6.0.2",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.3.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3",
+    "yarn-upgrade-all": "^0.7.5"
   }
 }
